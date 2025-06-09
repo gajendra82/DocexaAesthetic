@@ -1,0 +1,143 @@
+{
+  "success": 1,
+  "acc_credits": 30.0,
+  "error_code": 0,
+  "error": 0,
+  "mem_packages": [
+    {
+      "pm_id": 44456,
+      "end_date": "2033-06-09 11:25:41",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 169639,
+      "services": [
+        {
+          "sessions_taken": 2,
+          "sessions_available": 4,
+          "services": "LHR - Half Face",
+          "sessions_total": 6
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145667,
+      "price": 13000.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "6 sessions of half face with upperneck laser Diode ",
+      "inv_id": 12608,
+      "start_date": "2025-04-22 11:25:41"
+    },
+    {
+      "pm_id": 44457,
+      "end_date": "2033-06-09 11:25:41",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 169639,
+      "services": [
+        {
+          "sessions_taken": 1,
+          "sessions_available": 5,
+          "services": "LHR - Neck",
+          "sessions_total": 6
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145667,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "6 sessions of half face with upperneck laser Diode ",
+      "inv_id": 12608,
+      "start_date": "2025-04-22 11:25:41"
+    },
+    {
+      "pm_id": 38997,
+      "end_date": "2032-10-02 12:16:39",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 169639,
+      "services": [
+        {
+          "sessions_taken": 1,
+          "sessions_available": 0,
+          "services": "Qswitch",
+          "sessions_total": 1
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145667,
+      "price": 6333.4,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "3 session of  Acanthosis Nigricans Face Laser qswitch",
+      "inv_id": 10689,
+      "start_date": "2024-08-15 12:16:39"
+    },
+    {
+      "pm_id": 38996,
+      "end_date": "2032-10-02 12:11:22",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 169639,
+      "services": [
+        {
+          "sessions_taken": 1,
+          "sessions_available": 0,
+          "services": "PRP-DM",
+          "sessions_total": 1
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145667,
+      "price": 6333.3,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "3 sessions of prp for dermal melasma",
+      "inv_id": 10688,
+      "start_date": "2024-08-15 12:11:22"
+    },
+    {
+      "pm_id": 38981,
+      "end_date": "2025-08-10 11:32:16",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 12,
+      "end_date_change_reason": "",
+      "mem_id": 169639,
+      "services": [
+        {
+          "sessions_taken": 1,
+          "sessions_available": 0,
+          "services": "Body Microdermabrasion",
+          "sessions_total": 1
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145667,
+      "price": 6333.3,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "2 Sessions of  MICRODERMABRASION BODY",
+      "inv_id": 10683,
+      "start_date": "2024-08-15 11:32:16"
+    }
+  ]
+}

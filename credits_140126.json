@@ -1,0 +1,54 @@
+{
+  "success": 1,
+  "credit_details": [
+    {
+      "trn_comments": "",
+      "payment_mode": "prepaid",
+      "inv_pdf_blob_key": null,
+      "service_name": "Balance Due",
+      "mem_id": 140126,
+      "serv_id": 0,
+      "service_fee": 14640.0,
+      "created_at": "2023-07-02 12:17:35",
+      "uc_id": 77654,
+      "user_id": 121625,
+      "hco_id": 1619,
+      "hcp_id": 0,
+      "inv_type": "ACCDEBIT"
+    },
+    {
+      "trn_comments": "",
+      "payment_mode": "upi",
+      "inv_pdf_blob_key": null,
+      "service_name": "1 year unlimited face laser",
+      "mem_id": 140126,
+      "serv_id": 801,
+      "service_fee": 7640.0,
+      "created_at": "2023-07-02 00:00:01",
+      "uc_id": 77653,
+      "user_id": 121625,
+      "hco_id": 1619,
+      "hcp_id": 0,
+      "inv_type": "RECHARGE"
+    },
+    {
+      "trn_comments": "",
+      "payment_mode": "upi",
+      "inv_pdf_blob_key": "AMIfv94CEcDVdCKFeZqJ8a7K9f7xhkHLl2QdcQ-wL-3Q5ptAdZOdhztFmqjM6OFhDuPYL6pssc_3m9DnGXv_FdBgRXSakbpnZbPtSFgtNysZ3r-2tbfF1M00LOSNMTV8nHm99RRBDMf0-De8DiwecrV6zw6Z4_xFuCElFPd88PMZuwfuJzcj3TI",
+      "service_name": "1 YEAR UNLIMITED FULL FACE LHR",
+      "mem_id": 140126,
+      "serv_id": 801,
+      "service_fee": 7000.0,
+      "created_at": "2023-05-01 00:00:01",
+      "uc_id": 70583,
+      "user_id": 121625,
+      "hco_id": 1619,
+      "hcp_id": 0,
+      "inv_type": "RECHARGE"
+    }
+  ],
+  "acc_credits": 0.0,
+  "error_code": 0,
+  "error": 0,
+  "due_balance": 0
+}

@@ -1,0 +1,15 @@
+class Patientpost {
+  final String name;
+  final String mobile;
+  final int age;
+  final String gender;
+  final String timeSlot;
+
+  Patientpost({
+    required this.name,
+    required this.mobile,
+    required this.age,
+    required this.gender,
+    required this.timeSlot,
+  });
+}

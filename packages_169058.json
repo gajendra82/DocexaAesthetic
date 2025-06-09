@@ -1,0 +1,467 @@
+{
+  "success": 1,
+  "acc_credits": 5000.0,
+  "error_code": 0,
+  "error": 0,
+  "mem_packages": [
+    {
+      "pm_id": 44950,
+      "end_date": "2026-05-10 12:59:07",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 12,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 3,
+          "sessions_available": 1,
+          "services": "Inch loss",
+          "sessions_total": 4
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 25,
+      "hco_id": 1619,
+      "package_name": "4 session of inch loss (complimentary)",
+      "inv_id": 12807,
+      "start_date": "2025-05-15 12:59:07"
+    },
+    {
+      "pm_id": 43026,
+      "end_date": "2026-02-02 11:09:00",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 12,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 3,
+          "sessions_available": 0,
+          "services": "Cristal Pro (Per Cycle)",
+          "sessions_total": 3
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 29661.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "3 Cycles of cristal pro ",
+      "inv_id": 12073,
+      "start_date": "2025-02-07 11:09:00"
+    },
+    {
+      "pm_id": 43018,
+      "end_date": "2033-04-26 11:06:18",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 100,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 0,
+          "sessions_available": 3,
+          "services": "LHR - Underarms",
+          "sessions_total": 3
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 4237.26,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "3 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 12072,
+      "start_date": "2025-02-07 11:06:18"
+    },
+    {
+      "pm_id": 43019,
+      "end_date": "2033-04-26 11:06:18",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 100,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 0,
+          "sessions_available": 3,
+          "services": "LHR - Butt",
+          "sessions_total": 3
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "3 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 12072,
+      "start_date": "2025-02-07 11:06:18"
+    },
+    {
+      "pm_id": 43020,
+      "end_date": "2033-04-26 11:06:18",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 100,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 1,
+          "sessions_available": 2,
+          "services": "LHR - Full Arms",
+          "sessions_total": 3
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "3 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 12072,
+      "start_date": "2025-02-07 11:06:18"
+    },
+    {
+      "pm_id": 43021,
+      "end_date": "2033-04-26 11:06:18",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 100,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 0,
+          "sessions_available": 3,
+          "services": "LHR - Full Legs",
+          "sessions_total": 3
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "3 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 12072,
+      "start_date": "2025-02-07 11:06:18"
+    },
+    {
+      "pm_id": 43022,
+      "end_date": "2033-04-26 11:06:18",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 100,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 0,
+          "sessions_available": 3,
+          "services": "LHR - Pubic",
+          "sessions_total": 3
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "3 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 12072,
+      "start_date": "2025-02-07 11:06:18"
+    },
+    {
+      "pm_id": 43023,
+      "end_date": "2033-04-26 11:06:18",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 100,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 0,
+          "sessions_available": 3,
+          "services": "LHR - Full Front",
+          "sessions_total": 3
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "3 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 12072,
+      "start_date": "2025-02-07 11:06:18"
+    },
+    {
+      "pm_id": 43024,
+      "end_date": "2033-04-26 11:06:18",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 100,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 0,
+          "sessions_available": 3,
+          "services": "LHR - Full Back",
+          "sessions_total": 3
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "3 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 12072,
+      "start_date": "2025-02-07 11:06:18"
+    },
+    {
+      "pm_id": 43025,
+      "end_date": "2033-04-26 11:06:18",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 100,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 0,
+          "sessions_available": 3,
+          "services": "LHR - Full Face",
+          "sessions_total": 3
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "3 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 12072,
+      "start_date": "2025-02-07 11:06:18"
+    },
+    {
+      "pm_id": 38632,
+      "end_date": "2025-07-28 05:26:56",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 12,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 1,
+          "sessions_available": 1,
+          "services": "LHR - Full Chest",
+          "sessions_total": 2
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 10170.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "2 Sessions Of Chest,Public Laser",
+      "inv_id": 10571,
+      "start_date": "2024-08-02 05:26:56"
+    },
+    {
+      "pm_id": 38633,
+      "end_date": "2025-07-28 05:26:56",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 12,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 1,
+          "sessions_available": 1,
+          "services": "LHR - Pubic",
+          "sessions_total": 2
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "2 Sessions Of Chest,Public Laser",
+      "inv_id": 10571,
+      "start_date": "2024-08-02 05:26:56"
+    },
+    {
+      "pm_id": 37289,
+      "end_date": "2032-07-28 10:53:08",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 4,
+          "sessions_available": 0,
+          "services": "LHR - Full Legs",
+          "sessions_total": 4
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 29661.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "4 Sessions of full legs, 4 lower back,4 underarms,4 hips,1 pubic area",
+      "inv_id": 10177,
+      "start_date": "2024-06-10 10:53:08"
+    },
+    {
+      "pm_id": 37290,
+      "end_date": "2032-07-28 10:53:08",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 4,
+          "sessions_available": 0,
+          "services": "LHR - Half Back",
+          "sessions_total": 4
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "4 Sessions of full legs, 4 lower back,4 underarms,4 hips,1 pubic area",
+      "inv_id": 10177,
+      "start_date": "2024-06-10 10:53:08"
+    },
+    {
+      "pm_id": 37291,
+      "end_date": "2032-07-28 10:53:08",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 3,
+          "sessions_available": 1,
+          "services": "LHR - Underarms",
+          "sessions_total": 4
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "4 Sessions of full legs, 4 lower back,4 underarms,4 hips,1 pubic area",
+      "inv_id": 10177,
+      "start_date": "2024-06-10 10:53:08"
+    },
+    {
+      "pm_id": 37292,
+      "end_date": "2032-07-28 10:53:08",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 3,
+          "sessions_available": 1,
+          "services": "LHR - Butt",
+          "sessions_total": 4
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "4 Sessions of full legs, 4 lower back,4 underarms,4 hips,1 pubic area",
+      "inv_id": 10177,
+      "start_date": "2024-06-10 10:53:08"
+    },
+    {
+      "pm_id": 37293,
+      "end_date": "2032-07-28 10:53:08",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 169058,
+      "services": [
+        {
+          "sessions_taken": 1,
+          "sessions_available": 0,
+          "services": "LHR - Pubic",
+          "sessions_total": 1
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 145200,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "4 Sessions of full legs, 4 lower back,4 underarms,4 hips,1 pubic area",
+      "inv_id": 10177,
+      "start_date": "2024-06-10 10:53:08"
+    }
+  ]
+}

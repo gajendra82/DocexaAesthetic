@@ -1,0 +1,305 @@
+{
+  "success": 1,
+  "acc_credits": 0.0,
+  "error_code": 0,
+  "error": 0,
+  "mem_packages": [
+    {
+      "pm_id": 41956,
+      "end_date": "2033-02-08 13:46:13",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 105932,
+      "services": [
+        {
+          "sessions_taken": 1,
+          "sessions_available": 7,
+          "services": "LHR - Bikini",
+          "sessions_total": 8
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 94285,
+      "price": 21186.56,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "8 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 11709,
+      "start_date": "2024-12-22 13:46:13"
+    },
+    {
+      "pm_id": 41957,
+      "end_date": "2033-02-08 13:46:13",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 105932,
+      "services": [
+        {
+          "sessions_taken": 2,
+          "sessions_available": 6,
+          "services": "LHR - Butt",
+          "sessions_total": 8
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 94285,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "8 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 11709,
+      "start_date": "2024-12-22 13:46:13"
+    },
+    {
+      "pm_id": 41958,
+      "end_date": "2033-02-08 13:46:13",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 105932,
+      "services": [
+        {
+          "sessions_taken": 2,
+          "sessions_available": 6,
+          "services": "LHR - Underarms",
+          "sessions_total": 8
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 94285,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "8 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 11709,
+      "start_date": "2024-12-22 13:46:13"
+    },
+    {
+      "pm_id": 41959,
+      "end_date": "2033-02-08 13:46:13",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 105932,
+      "services": [
+        {
+          "sessions_taken": 1,
+          "sessions_available": 7,
+          "services": "LHR - Full Face",
+          "sessions_total": 8
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 94285,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "8 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 11709,
+      "start_date": "2024-12-22 13:46:13"
+    },
+    {
+      "pm_id": 41960,
+      "end_date": "2033-02-08 13:46:13",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 105932,
+      "services": [
+        {
+          "sessions_taken": 2,
+          "sessions_available": 6,
+          "services": "LHR - Full Arms",
+          "sessions_total": 8
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 94285,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "8 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 11709,
+      "start_date": "2024-12-22 13:46:13"
+    },
+    {
+      "pm_id": 41961,
+      "end_date": "2033-02-08 13:46:13",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 105932,
+      "services": [
+        {
+          "sessions_taken": 2,
+          "sessions_available": 6,
+          "services": "LHR - Full Legs",
+          "sessions_total": 8
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 94285,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "8 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 11709,
+      "start_date": "2024-12-22 13:46:13"
+    },
+    {
+      "pm_id": 41962,
+      "end_date": "2033-02-08 13:46:13",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 105932,
+      "services": [
+        {
+          "sessions_taken": 2,
+          "sessions_available": 6,
+          "services": "LHR - Full Back",
+          "sessions_total": 8
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 94285,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "8 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 11709,
+      "start_date": "2024-12-22 13:46:13"
+    },
+    {
+      "pm_id": 41963,
+      "end_date": "2033-02-08 13:46:13",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 99,
+      "end_date_change_reason": "",
+      "mem_id": 105932,
+      "services": [
+        {
+          "sessions_taken": 2,
+          "sessions_available": 6,
+          "services": "LHR - Full Front",
+          "sessions_total": 8
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 94285,
+      "price": 0.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "8 Sessions of full body laser maintenance ( Diode )",
+      "inv_id": 11709,
+      "start_date": "2024-12-22 13:46:13"
+    },
+    {
+      "pm_id": 31344,
+      "end_date": "2025-10-28 05:29:18",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 24,
+      "end_date_change_reason": "",
+      "mem_id": 105932,
+      "services": [
+        {
+          "sessions_taken": 7,
+          "sessions_available": 1,
+          "services": "LHR - Full Body",
+          "sessions_total": 8
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 94285,
+      "price": 50000.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "8 sessions of Full Body laser",
+      "inv_id": 8073,
+      "start_date": "2023-11-08 05:29:18"
+    },
+    {
+      "pm_id": 10864,
+      "end_date": "2023-03-07 11:47:24",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 12,
+      "end_date_change_reason": "",
+      "mem_id": 105932,
+      "services": [
+        {
+          "sessions_taken": 1,
+          "sessions_available": 0,
+          "services": "Injection Lipolysis",
+          "sessions_total": 1
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 94285,
+      "price": 2965.0,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "Single session of injection lipo of chin",
+      "inv_id": 2280,
+      "start_date": "2022-03-12 11:47:24"
+    },
+    {
+      "pm_id": 7046,
+      "end_date": "2023-03-09 00:00:00",
+      "service_options": "",
+      "original_end_date": "2022-11-22 08:20:21",
+      "validity_weeks": 12,
+      "end_date_change_reason": "validity extended for deduction",
+      "mem_id": 105932,
+      "services": [
+        {
+          "sessions_taken": 8,
+          "sessions_available": 0,
+          "services": "LHR - Sidelocks",
+          "sessions_total": 8
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 94285,
+      "price": 7627.04,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "laser",
+      "inv_id": 1258,
+      "start_date": "2021-11-27 08:20:21"
+    }
+  ]
+}

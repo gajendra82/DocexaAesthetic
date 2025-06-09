@@ -1,0 +1,29 @@
+{
+  "success": 1,
+  "package_details": [
+    {
+      "const_id": "877774",
+      "hcp_last_name": "Krishna",
+      "hcp_title": "Ms.",
+      "service_name": "LHR - Half Face",
+      "hcp_first_name": "Ritu",
+      "sessions_taken": "2",
+      "package_name": "6 sessions of half face with upperneck laser Diode ",
+      "sessions_total": "6",
+      "scheduled_time": "1749121200000"
+    },
+    {
+      "const_id": "863878",
+      "hcp_last_name": "Krishna",
+      "hcp_title": "Ms.",
+      "service_name": "LHR - Half Face",
+      "hcp_first_name": "Ritu",
+      "sessions_taken": "1",
+      "package_name": "6 sessions of half face with upperneck laser Diode ",
+      "sessions_total": "6",
+      "scheduled_time": "1745308800000"
+    }
+  ],
+  "error_code": 0,
+  "error": 0
+}

@@ -1,0 +1,56 @@
+{
+  "success": 1,
+  "member_appointments": [
+    {
+      "room_id": 92,
+      "online_request": false,
+      "appt_status": "completed",
+      "check_in_time": "2025-06-05 11:53:52",
+      "mem_id": 189728,
+      "created_at": "2025-06-05 11:53:47",
+      "discount": "0.00",
+      "scheduled_time": "1749119400000",
+      "service_tax_total": "0.00",
+      "inv_number": "12947",
+      "const_id": 878194,
+      "follow_up_date": null,
+      "hcp_last_name": "Korde",
+      "duration": "15",
+      "inv_tax": "0.00",
+      "inv_total": "500.00",
+      "updated_at": "2025-06-05 11:53:52",
+      "dpt_id": 25,
+      "hcp_id": 2895,
+      "updated_by_email": "+918097316661",
+      "inv_id": 12947,
+      "created_by_email": "+918097316661",
+      "doctor_notes": null,
+      "payment_mode": "UPI",
+      "pat_first_name": "Ayushi",
+      "hcp_title": "Dr.",
+      "hcp_first_name": "Shital",
+      "service_total": "500.00",
+      "consultation_notes": ".",
+      "services": [
+        {
+          "service_options": "",
+          "service_name": "Consultation",
+          "serv_id": "798",
+          "service_fee": "1000.00"
+        }
+      ],
+      "pat_mobile": "+919897762025",
+      "scheduled_end_time": 1749120300000,
+      "remote_session": false,
+      "reporting_time": "1749119400000",
+      "user_id": 161618,
+      "hco_id": 1619,
+      "pat_last_name": "Neema",
+      "parent_const_id": 0,
+      "status": "completed",
+      "discharge_time": "2025-06-05 11:54:10"
+    }
+  ],
+  "error_code": 0,
+  "error": 0
+}

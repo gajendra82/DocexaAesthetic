@@ -1,0 +1,60 @@
+{
+  "success": 1,
+  "loyalty_history": [
+    {
+      "redeemed_date": null,
+      "uc_id": 0,
+      "user_id": 145200,
+      "mem_id": 169058,
+      "hco_id": 1619,
+      "created_at": "2025-02-14 18:15:03",
+      "item_name": "3 Cycles of cristal pro ",
+      "collected_date": "2025-02-14 18:15:03",
+      "ulp_id": 83513,
+      "points": 1186.0,
+      "status": "collected"
+    },
+    {
+      "redeemed_date": null,
+      "uc_id": 0,
+      "user_id": 145200,
+      "mem_id": 169058,
+      "hco_id": 1619,
+      "created_at": "2025-02-14 18:15:03",
+      "item_name": "3 Sessions of full body laser maintenance ( Diode )",
+      "collected_date": "2025-02-14 18:15:03",
+      "ulp_id": 83512,
+      "points": 169.0,
+      "status": "collected"
+    },
+    {
+      "redeemed_date": null,
+      "uc_id": 0,
+      "user_id": 145200,
+      "mem_id": 169058,
+      "hco_id": 1619,
+      "created_at": "2024-08-08 18:15:04",
+      "item_name": "2 Sessions Of Chest,Public Laser",
+      "collected_date": "2024-08-08 18:15:04",
+      "ulp_id": 69111,
+      "points": 407.0,
+      "status": "collected"
+    },
+    {
+      "redeemed_date": null,
+      "uc_id": 0,
+      "user_id": 145200,
+      "mem_id": 169058,
+      "hco_id": 1619,
+      "created_at": "2024-06-17 18:15:13",
+      "item_name": "4 Sessions of full legs, 4 lower back,4 underarms,4 hips,1 pubic area",
+      "collected_date": "2024-06-17 18:15:13",
+      "ulp_id": 65100,
+      "points": 1186.0,
+      "status": "collected"
+    }
+  ],
+  "collected_points": 2948.0,
+  "error_code": 0,
+  "error": 0
+}

@@ -1,0 +1,170 @@
+{
+  "success": 1,
+  "acc_credits": 0.0,
+  "error_code": 0,
+  "error": 0,
+  "mem_packages": [
+    {
+      "pm_id": 32094,
+      "end_date": "2025-11-28 12:33:27",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 24,
+      "end_date_change_reason": "",
+      "mem_id": 119470,
+      "services": [
+        {
+          "sessions_taken": 12,
+          "sessions_available": 0,
+          "services": "Antioxidant Therapy",
+          "sessions_total": 12
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 105028,
+      "price": 76271.16,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "12 IV GLUTA, 2 PEEL, 2 CARBON FACIAL",
+      "inv_id": 8384,
+      "start_date": "2023-12-09 12:33:27"
+    },
+    {
+      "pm_id": 32095,
+      "end_date": "2025-11-28 12:33:27",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 24,
+      "end_date_change_reason": "",
+      "mem_id": 119470,
+      "services": [
+        {
+          "sessions_taken": 2,
+          "sessions_available": 0,
+          "services": "Yellow Peel",
+          "sessions_total": 2
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 105028,
+      "price": 4237.32,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "12 IV GLUTA, 2 PEEL, 2 CARBON FACIAL",
+      "inv_id": 8384,
+      "start_date": "2023-12-09 12:33:27"
+    },
+    {
+      "pm_id": 32096,
+      "end_date": "2025-11-28 12:33:27",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 24,
+      "end_date_change_reason": "",
+      "mem_id": 119470,
+      "services": [
+        {
+          "sessions_taken": 2,
+          "sessions_available": 0,
+          "services": "Carbon Facial",
+          "sessions_total": 2
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 105028,
+      "price": 4237.3,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "12 IV GLUTA, 2 PEEL, 2 CARBON FACIAL",
+      "inv_id": 8384,
+      "start_date": "2023-12-09 12:33:27"
+    },
+    {
+      "pm_id": 13891,
+      "end_date": "2023-06-13 13:29:18",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 12,
+      "end_date_change_reason": "",
+      "mem_id": 119470,
+      "services": [
+        {
+          "sessions_taken": 12,
+          "sessions_available": 0,
+          "services": "Antioxidant Therapy",
+          "sessions_total": 12
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 105028,
+      "price": 76271.16,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "12 sessions of iv gluta, 2 yellow peel, 2 carbon facial",
+      "inv_id": 3277,
+      "start_date": "2022-06-18 13:29:18"
+    },
+    {
+      "pm_id": 13892,
+      "end_date": "2023-06-13 13:29:18",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 12,
+      "end_date_change_reason": "",
+      "mem_id": 119470,
+      "services": [
+        {
+          "sessions_taken": 2,
+          "sessions_available": 0,
+          "services": "Yellow Peel",
+          "sessions_total": 2
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 105028,
+      "price": 3389.82,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "12 sessions of iv gluta, 2 yellow peel, 2 carbon facial",
+      "inv_id": 3277,
+      "start_date": "2022-06-18 13:29:18"
+    },
+    {
+      "pm_id": 13893,
+      "end_date": "2023-06-13 13:29:18",
+      "service_options": "",
+      "original_end_date": null,
+      "validity_weeks": 12,
+      "end_date_change_reason": "",
+      "mem_id": 119470,
+      "services": [
+        {
+          "sessions_taken": 2,
+          "sessions_available": 0,
+          "services": "Carbon Facial",
+          "sessions_total": 2
+        }
+      ],
+      "uc_id": 0,
+      "sp_id": 0,
+      "user_id": 105028,
+      "price": 5084.74,
+      "unlimited_sessions": false,
+      "dpt_id": 0,
+      "hco_id": 1619,
+      "package_name": "12 sessions of iv gluta, 2 yellow peel, 2 carbon facial",
+      "inv_id": 3277,
+      "start_date": "2022-06-18 13:29:18"
+    }
+  ]
+}

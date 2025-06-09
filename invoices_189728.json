@@ -1,0 +1,36 @@
+{
+  "success": 1,
+  "acc_credits": 0.0,
+  "mem_invoices": [
+    {
+      "trn_comments": "",
+      "inv_pdf_blob_key": null,
+      "mem_id": 189728,
+      "created_at": "2025-06-05 00:00:01",
+      "cgst_amt": 0.0,
+      "service_tax_total": 0.0,
+      "discount_amt": 0.0,
+      "const_id": 878194,
+      "inv_tax": 0,
+      "inv_total": 500.0,
+      "dpt_id": 25,
+      "amt_paid": 500.0,
+      "inv_id": 12947,
+      "invoice_number": "MC/POW/12947",
+      "inv_type": "Consult",
+      "payment_mode": "UPI",
+      "amt_balance": 0.0,
+      "service_name": "Hair Consultation",
+      "serv_id": 798,
+      "service_fee": 500.0,
+      "service_total": 500.0,
+      "sgst_amt": 0.0,
+      "uc_id": 0,
+      "amt_paid_prepaid": 0.0,
+      "user_id": 161618
+    }
+  ],
+  "error_code": 0,
+  "error": 0,
+  "due_balance": 0
+}

@@ -1,0 +1,47 @@
+{
+  "success": 1,
+  "loyalty_history": [
+    {
+      "redeemed_date": null,
+      "uc_id": 0,
+      "user_id": 105028,
+      "mem_id": 119470,
+      "hco_id": 1619,
+      "created_at": "2025-01-25 18:15:04",
+      "item_name": "Single session of Carbon Peel (Acne)",
+      "collected_date": "2025-01-25 18:15:04",
+      "ulp_id": 81868,
+      "points": 160.0,
+      "status": "collected"
+    },
+    {
+      "redeemed_date": null,
+      "uc_id": 0,
+      "user_id": 105028,
+      "mem_id": 119470,
+      "hco_id": 1619,
+      "created_at": "2023-12-16 18:15:12",
+      "item_name": "12 IV GLUTA, 2 PEEL, 2 CARBON FACIAL",
+      "collected_date": "2023-12-16 18:15:12",
+      "ulp_id": 49103,
+      "points": 3390.0,
+      "status": "collected"
+    },
+    {
+      "redeemed_date": null,
+      "uc_id": 0,
+      "user_id": 105028,
+      "mem_id": 119470,
+      "hco_id": 1619,
+      "created_at": "2022-06-25 18:15:10",
+      "item_name": "12 sessions of iv gluta, 2 yellow peel, 2 carbon facial",
+      "collected_date": "2022-06-25 18:15:10",
+      "ulp_id": 7303,
+      "points": 1661.0,
+      "status": "collected"
+    }
+  ],
+  "collected_points": 5211.0,
+  "error_code": 0,
+  "error": 0
+}
