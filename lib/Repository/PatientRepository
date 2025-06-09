@@ -92,6 +92,29 @@ Future<Loginresponse> login(String email, String password) async {
 Future<Loginresponse> createAccount(Map<String, dynamic> data) async {
     return await _apiService.createAccount(data);
   }
+
+Future<GetUploadedImagesResponse> deletePatientImage({
+    required String doctorId,
+    required String patientId,
+    required String fileName,
+    required String patientNumber,
+  }) async {
+    try {
+      final response = await _apiService.deleteUploadedImage(
+        doctorId: doctorId,
+        patientId: patientId,
+        fileName: fileName,
+        patientNumber: patientNumber,
+      );
+      
+      return response;
+    } catch (e) {
+      return GetUploadedImagesResponse(
+        status: false,
+        message: 'Error deleting image: $e',
+      );
+    }
+  }
 }
 
 

@@ -51,6 +51,7 @@ class _FullImageEditorScreenState extends State<FullImageEditorScreen> {
   double _viewportHeight = 0;
   final apiService = ApiService();
   late final PatientRepository patientRepository;
+  bool _isUploading = false;
 
   @override
   void initState() {
@@ -98,6 +99,9 @@ class _FullImageEditorScreenState extends State<FullImageEditorScreen> {
   }
 
   Future<void> _saveAndUploadMarkedImage(BuildContext context) async {
+    setState(() {
+      _isUploading = true; // Set uploading state to true when starting
+    });
     try {
       RenderRepaintBoundary boundary =
           _imageKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
@@ -150,6 +154,10 @@ class _FullImageEditorScreenState extends State<FullImageEditorScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: $e')),
       );
+    } finally {
+      setState(() {
+        _isUploading = false; // Reset uploading state
+      });
     }
   }
 
@@ -187,140 +195,142 @@ class _FullImageEditorScreenState extends State<FullImageEditorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Zoom and Mark",
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.teal,
-        actions: [
-          if (isMarkingEnabled) ...[
-            IconButton(
-              icon: const Icon(Icons.color_lens),
-              onPressed: _showColorPicker,
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              "Zoom and Mark",
+              style: TextStyle(color: Colors.white),
             ),
-            IconButton(
-              icon: const Icon(Icons.clear),
-              onPressed: _clearDrawing,
-            ),
-          ],
-        ],
-      ),
-      body: Column(
-        children: [
-          // User info and timestamp header
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: Colors.teal.shade50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('User: $userLogin',
-                    style: const TextStyle(color: Colors.teal)),
-                Text(widget.uploadedDate ?? 'Not available',
-                    style: const TextStyle(color: Colors.teal)),
+            backgroundColor: Colors.teal,
+            actions: [
+              if (isMarkingEnabled) ...[
+                IconButton(
+                  icon: const Icon(Icons.color_lens),
+                  onPressed: _showColorPicker,
+                ),
+                IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: _clearDrawing,
+                ),
               ],
-            ),
+            ],
           ),
-          Expanded(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                _viewportWidth = constraints.maxWidth;
-                _viewportHeight = constraints.maxHeight;
-                return ClipRect(
-                  child: InteractiveViewer(
-                    transformationController: _transformationController,
-                    panEnabled: !isMarkingEnabled,
-                    scaleEnabled: !isMarkingEnabled,
-                    minScale: 0.5,
-                    maxScale: 4.0,
-                    boundaryMargin: const EdgeInsets.all(0),
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onPanStart: isMarkingEnabled
-                          ? (details) {
-                              final localPos = _transformToImageSpace(
-                                  details.globalPosition);
-                              setState(() {
-                                if (currentMode == DrawMode.freehand) {
-                                  points.add(localPos);
-                                } else {
-                                  startShape = localPos;
+          body: Column(
+            children: [
+              // User info and timestamp header
+              Container(
+                padding: const EdgeInsets.all(8),
+                color: Colors.teal.shade50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('User: $userLogin',
+                        style: const TextStyle(color: Colors.teal)),
+                    Text(widget.uploadedDate ?? 'Not available',
+                        style: const TextStyle(color: Colors.teal)),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    _viewportWidth = constraints.maxWidth;
+                    _viewportHeight = constraints.maxHeight;
+                    return ClipRect(
+                      child: InteractiveViewer(
+                        transformationController: _transformationController,
+                        panEnabled: !isMarkingEnabled,
+                        scaleEnabled: !isMarkingEnabled,
+                        minScale: 0.5,
+                        maxScale: 4.0,
+                        boundaryMargin: const EdgeInsets.all(0),
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onPanStart: isMarkingEnabled
+                              ? (details) {
+                                  final localPos = _transformToImageSpace(
+                                      details.globalPosition);
+                                  setState(() {
+                                    if (currentMode == DrawMode.freehand) {
+                                      points.add(localPos);
+                                    } else {
+                                      startShape = localPos;
+                                    }
+                                  });
                                 }
-                              });
-                            }
-                          : null,
-                      onPanUpdate: isMarkingEnabled
-                          ? (details) {
-                              final localPos = _transformToImageSpace(
-                                  details.globalPosition);
-                              setState(() {
-                                if (currentMode == DrawMode.freehand) {
-                                  points.add(localPos);
-                                } else {
-                                  endShape = localPos;
+                              : null,
+                          onPanUpdate: isMarkingEnabled
+                              ? (details) {
+                                  final localPos = _transformToImageSpace(
+                                      details.globalPosition);
+                                  setState(() {
+                                    if (currentMode == DrawMode.freehand) {
+                                      points.add(localPos);
+                                    } else {
+                                      endShape = localPos;
+                                    }
+                                  });
                                 }
-                              });
-                            }
-                          : null,
-                      onPanEnd: isMarkingEnabled
-                          ? (_) {
-                              setState(() {
-                                if (currentMode != DrawMode.freehand &&
-                                    startShape != null &&
-                                    endShape != null) {
-                                  shapes.add(ShapeDraw(
-                                    color: selectedColor,
-                                    start: startShape!,
-                                    end: endShape!,
-                                    mode: currentMode,
-                                  ));
+                              : null,
+                          onPanEnd: isMarkingEnabled
+                              ? (_) {
+                                  setState(() {
+                                    if (currentMode != DrawMode.freehand &&
+                                        startShape != null &&
+                                        endShape != null) {
+                                      shapes.add(ShapeDraw(
+                                        color: selectedColor,
+                                        start: startShape!,
+                                        end: endShape!,
+                                        mode: currentMode,
+                                      ));
+                                    }
+                                    points.add(null);
+                                    startShape = null;
+                                    endShape = null;
+                                  });
                                 }
-                                points.add(null);
-                                startShape = null;
-                                endShape = null;
-                              });
-                            }
-                          : null,
-                      child: RepaintBoundary(
-                        key: _imageKey,
-                        child: Stack(
-                          children: [
-                            Center(
-                              child: widget.image is File
-                                  ? Image.file(widget.image as File,
-                                      fit: BoxFit.contain)
-                                  : Image.network(
-                                      widget.image as String,
-                                      fit: BoxFit.contain,
-                                      loadingBuilder:
-                                          (context, child, loadingProgress) {
-                                        if (loadingProgress == null)
-                                          return child;
-                                        return Center(
-                                          child: CircularProgressIndicator(
-                                            value: loadingProgress
-                                                        .expectedTotalBytes !=
-                                                    null
-                                                ? loadingProgress
-                                                        .cumulativeBytesLoaded /
-                                                    loadingProgress
-                                                        .expectedTotalBytes!
-                                                : null,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                            ),
-                            if (_imageSize != null)
-                              Positioned.fill(
-                                child: CustomPaint(
-                                  painter: ShapePainter(
-                                    points: points,
-                                    shapes: shapes,
-                                    tempShape:
-                                        (startShape != null && endShape != null)
+                              : null,
+                          child: RepaintBoundary(
+                            key: _imageKey,
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: widget.image is File
+                                      ? Image.file(widget.image as File,
+                                          fit: BoxFit.contain)
+                                      : Image.network(
+                                          widget.image as String,
+                                          fit: BoxFit.contain,
+                                          loadingBuilder: (context, child,
+                                              loadingProgress) {
+                                            if (loadingProgress == null)
+                                              return child;
+                                            return Center(
+                                              child: CircularProgressIndicator(
+                                                value: loadingProgress
+                                                            .expectedTotalBytes !=
+                                                        null
+                                                    ? loadingProgress
+                                                            .cumulativeBytesLoaded /
+                                                        loadingProgress
+                                                            .expectedTotalBytes!
+                                                    : null,
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                ),
+                                if (_imageSize != null)
+                                  Positioned.fill(
+                                    child: CustomPaint(
+                                      painter: ShapePainter(
+                                        points: points,
+                                        shapes: shapes,
+                                        tempShape: (startShape != null &&
+                                                endShape != null)
                                             ? ShapeDraw(
                                                 color: selectedColor,
                                                 start: startShape!,
@@ -328,80 +338,112 @@ class _FullImageEditorScreenState extends State<FullImageEditorScreen> {
                                                 mode: currentMode,
                                               )
                                             : null,
-                                    viewportSize:
-                                        Size(_viewportWidth, _viewportHeight),
-                                    imageSize: _imageSize!,
+                                        viewportSize: Size(
+                                            _viewportWidth, _viewportHeight),
+                                        imageSize: _imageSize!,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                          ],
+                              ],
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.teal.shade50,
-        child: isMarkingEnabled
-            ? SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      _shapeButton(Icons.edit, "Free", DrawMode.freehand),
-                      const SizedBox(width: 8),
-                      _shapeButton(
-                          Icons.crop_square, "Rectangle", DrawMode.rectangle),
-                      const SizedBox(width: 8),
-                      _shapeButton(Icons.circle, "Circle", DrawMode.circle),
-                      const SizedBox(width: 8),
-                      TextButton.icon(
-                        icon: const Icon(Icons.save, color: Colors.green),
-                        label: const Text(
-                          "Save & Upload",
-                          style: TextStyle(color: Colors.green),
-                        ),
-                        onPressed: () => _saveAndUploadMarkedImage(context),
-                      ),
-                      const SizedBox(width: 8),
-                      TextButton.icon(
-                        icon: const Icon(Icons.close, color: Colors.red),
-                        label: const Text(
-                          "Stop Marking",
-                          style: TextStyle(color: Colors.red),
-                        ),
-                        onPressed: () =>
-                            setState(() => isMarkingEnabled = false),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            : Center(
-                child: ElevatedButton.icon(
-                  icon: const Icon(Icons.edit),
-                  label: const Text("Start Marking",
-                      style: TextStyle(
-                        color: Colors.white,
-                      )),
-                  onPressed: () => setState(() => isMarkingEnabled = true),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.teal,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 12,
-                    ),
-                  ),
+                    );
+                  },
                 ),
               ),
-      ),
+            ],
+          ),
+          bottomNavigationBar: BottomAppBar(
+            color: Colors.teal.shade50,
+            child: isMarkingEnabled
+                ? SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          _shapeButton(Icons.edit, "Free", DrawMode.freehand),
+                          const SizedBox(width: 8),
+                          _shapeButton(Icons.crop_square, "Rectangle",
+                              DrawMode.rectangle),
+                          const SizedBox(width: 8),
+                          _shapeButton(Icons.circle, "Circle", DrawMode.circle),
+                          const SizedBox(width: 8),
+                          TextButton.icon(
+                            icon: const Icon(Icons.save, color: Colors.green),
+                            label: const Text(
+                              "Save & Upload",
+                              style: TextStyle(color: Colors.green),
+                            ),
+                            onPressed: () => _saveAndUploadMarkedImage(context),
+                          ),
+                          const SizedBox(width: 8),
+                          TextButton.icon(
+                            icon: const Icon(Icons.close, color: Colors.red),
+                            label: const Text(
+                              "Stop Marking",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            onPressed: () =>
+                                setState(() => isMarkingEnabled = false),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : Center(
+                    child: ElevatedButton.icon(
+                      icon: const Icon(Icons.edit),
+                      label: const Text("Start Marking",
+                          style: TextStyle(
+                            color: Colors.white,
+                          )),
+                      onPressed: () => setState(() => isMarkingEnabled = true),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
+                      ),
+                    ),
+                  ),
+          ),
+        ),
+        if (_isUploading)
+          Container(
+            color: Colors.black54,
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Uploading marked image...',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 

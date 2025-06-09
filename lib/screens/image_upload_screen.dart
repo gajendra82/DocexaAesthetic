@@ -51,6 +51,23 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     patientRepository = PatientRepository(apiService);
     _scrollController.addListener(_scrollListener);
     _loadMorePatients();
+    context.read<ImageBloc>().stream.listen((state) {
+      if (state.error != null && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(state.error!),
+            backgroundColor: Colors.red,
+            action: SnackBarAction(
+              label: 'Dismiss',
+              textColor: Colors.white,
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              },
+            ),
+          ),
+        );
+      }
+    });
   }
 
   @override
@@ -814,125 +831,178 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     required String patientnumber,
     required int patientid,
   }) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            if (isLocalFile)
-              // Local image
-              Image.file(
-                state.images[index],
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  print('Error loading local image: $error');
-                  return _buildErrorContainer();
-                },
-              )
-            else
-              // Uploaded image
-              Image.network(
-                state.uploadedFiles[index].url,
-                fit: BoxFit.cover,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes!
-                          : null,
-                    ),
-                  );
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  print('Error loading network image: $error');
-                  return _buildErrorContainer();
-                },
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
               ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                if (isLocalFile)
+                  // Local image
+                  Image.file(
+                    state.images[index],
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      print('Error loading local image: $error');
+                      return _buildErrorContainer();
+                    },
+                  )
+                else
+                  // Uploaded image
+                  Image.network(
+                    state.uploadedFiles[index].url,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      print('Error loading network image: $error');
+                      return _buildErrorContainer();
+                    },
+                  ),
 
-            // Controls overlay
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.7),
-                      Colors.transparent,
-                    ],
+                // Controls overlay
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.black.withOpacity(0.7),
+                          Colors.transparent,
+                        ],
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: Icon(isLocalFile ? Icons.edit : Icons.edit_note,
+                              color: Colors.white),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => FullImageEditorScreen(
+                                  image: isLocalFile
+                                      ? state.images[index]
+                                      : state.uploadedFiles[index].url,
+                                  uploadedDate: isLocalFile
+                                      ? DateFormat('yyyy-MM-dd HH:mm:ss')
+                                          .format(DateTime.now())
+                                      : state.uploadedFiles[index].uploadedDate,
+                                  patientNumber: patientnumber,
+                                  patientId: patientid,
+                                  doctorId: doctor_id,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.close, color: Colors.white),
+                          onPressed: state.isLoading
+                              ? null
+                              : () async {
+                                  final bool? confirm = await showDialog<bool>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Delete Image'),
+                                        content: const Text(
+                                            'Are you sure you want to delete this image?'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.of(context)
+                                                    .pop(false),
+                                            child: const Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.of(context).pop(true),
+                                            style: TextButton.styleFrom(
+                                              foregroundColor: Colors.red,
+                                            ),
+                                            child: const Text('Delete'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+
+                                  if (confirm == true && context.mounted) {
+                                    if (isLocalFile) {
+                                      context.read<ImageBloc>().add(
+                                            RemoveImage(
+                                              index: index,
+                                              fileName: p.basename(
+                                                  state.images[index].path),
+                                              isUploaded: false,
+                                            ),
+                                          );
+                                    } else {
+                                      context.read<ImageBloc>().add(
+                                            RemoveImage(
+                                              index: index,
+                                              fileName: state
+                                                  .uploadedFiles[index]
+                                                  .fileName,
+                                              isUploaded: true,
+                                              doctorId: doctor_id,
+                                              patientId: patientid.toString(),
+                                              patientNumber: patientnumber,
+                                            ),
+                                          );
+                                    }
+                                  }
+                                },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                padding: const EdgeInsets.all(8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: Icon(isLocalFile ? Icons.edit : Icons.edit_note,
-                          color: Colors.white),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => FullImageEditorScreen(
-                              image: isLocalFile
-                                  ? state.images[index]
-                                  : state.uploadedFiles[index].url,
-                              uploadedDate: isLocalFile
-                                  ? DateFormat('yyyy-MM-dd HH:mm:ss')
-                                      .format(DateTime.now())
-                                  : state.uploadedFiles[index].uploadedDate,
-                              patientNumber: patientnumber,
-                              patientId: patientid,
-                              doctorId: doctor_id,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.close, color: Colors.white),
-                      onPressed: () {
-                        if (isLocalFile) {
-                          context.read<ImageBloc>().add(
-                                RemoveImage(
-                                  index: index,
-                                  fileName:
-                                      p.basename(state.images[index].path),
-                                ),
-                              );
-                        } else {
-                          context.read<ImageBloc>().add(
-                                RemoveImage(
-                                  index: index,
-                                  fileName: state.uploadedFiles[index].fileName,
-                                ),
-                              );
-                        }
-                      },
-                    ),
-                  ],
+              ],
+            ),
+          ),
+        ),
+        if (state.isLoading)
+          Positioned.fill(
+            child: Container(
+              color: Colors.black54,
+              child: const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                 ),
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+      ],
     );
   }
 

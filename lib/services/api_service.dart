@@ -207,4 +207,34 @@ class ApiService {
       rethrow;
     }
   }
+
+  Future<GetUploadedImagesResponse> deleteUploadedImage({
+    required String doctorId,
+    required String patientId,
+    required String fileName,
+    required String patientNumber,
+  }) async {
+    final currentDateTime = DateTime.now().toUtc().toString().split('.')[0];
+    const userLogin = 'gajendra82';
+
+    try {
+      final response = await _dio.delete(
+        '/api/deletePatientImage',
+        data: {
+          'doctor_id': doctorId,
+          'patient_id': patientId,
+          'file_name': fileName,
+          'patient_number': patientNumber,
+          'user_login': userLogin,
+          'timestamp': currentDateTime,
+        },
+      );
+      return GetUploadedImagesResponse.fromJson(response.data);
+    } catch (e) {
+      return GetUploadedImagesResponse(
+        status: false,
+        message: 'Failed to delete image: $e',
+      );
+    }
+  }
 }

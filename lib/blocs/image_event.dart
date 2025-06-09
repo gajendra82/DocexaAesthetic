@@ -15,15 +15,15 @@ class AddImage extends ImageEvent {
   AddImage(this.image);
 }
 
-class RemoveImage extends ImageEvent {
-  final int index;
-  final String fileName;
+// class RemoveImage extends ImageEvent {
+//   final int index;
+//   final String fileName;
 
-  RemoveImage({
-    required this.index,
-    required this.fileName,
-  });
-}
+//   RemoveImage({
+//     required this.index,
+//     required this.fileName,
+//   });
+// }
 
 class UpdateImagesWithUrls extends ImageEvent {
   final List<String> imageUrls;
@@ -58,6 +58,24 @@ class UpdateUploadedFiles extends ImageEvent {
   final List<UploadedFile> uploadedFiles;
 
   UpdateUploadedFiles(this.uploadedFiles);
+}
+
+class RemoveImage extends ImageEvent {
+  final int index;
+  final String fileName;
+  final bool isUploaded;
+  final String? doctorId;
+  final String? patientId;
+  final String? patientNumber;
+
+  RemoveImage({
+    required this.index,
+    required this.fileName,
+    this.isUploaded = false,
+    this.doctorId,
+    this.patientId,
+    this.patientNumber,
+  });
 }
 
 class ClearImages extends ImageEvent {}
