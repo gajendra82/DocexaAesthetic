@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.error)),
             );
-          } else if (state is AuthSuccess) {
+          } else if (state is LoginSuccess) {
             await _onLoginSuccess();
           }
         },
@@ -71,8 +71,16 @@ class _LoginPageState extends State<LoginPage> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        Text('Login',
-                            style: Theme.of(context).textTheme.headlineMedium),
+                        Text(
+                          'Login',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium
+                              ?.copyWith(
+                                color: Colors.teal,
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
                         SizedBox(height: 24),
                         TextFormField(
                           decoration: InputDecoration(
@@ -108,6 +116,8 @@ class _LoginPageState extends State<LoginPage> {
                             ? CircularProgressIndicator()
                             : ElevatedButton(
                                 style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.teal,
+                                  foregroundColor: Colors.white,
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 64, vertical: 14),
                                   shape: RoundedRectangleBorder(
@@ -132,6 +142,9 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.of(context)
                                     .pushReplacementNamed('/register');
                               },
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.teal,
+                          ),
                           child: Text('Don\'t have an account? Create one'),
                         ),
                       ],

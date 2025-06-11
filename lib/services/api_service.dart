@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:docexaaesthetic/models/GetUploadedImagesResponse.dart';
 import 'package:docexaaesthetic/models/Loginresponse.dart';
 import 'package:docexaaesthetic/models/UploadImageResponse.dart';
+import 'package:docexaaesthetic/models/createaccountresponse.dart';
 import 'package:docexaaesthetic/models/patientget.dart';
 import 'package:path/path.dart';
 
@@ -193,16 +194,16 @@ class ApiService {
 
   /// Add account creation here if available in the API
   /// This is just an example, adjust the model if your register API returns something different
-  Future<Loginresponse> createAccount(Map<String, dynamic> data) async {
+  Future<Createaccountresponse> createAccount(Map<String, dynamic> data) async {
     try {
       final response = await _dio.post(
-        '/auth/public/register',
+        '/register',
         data: data,
         options: Options(
           headers: {'Content-Type': 'application/json'},
         ),
       );
-      return Loginresponse.fromJson(response.data);
+      return Createaccountresponse.fromJson(response.data);
     } catch (e) {
       rethrow;
     }
@@ -214,20 +215,20 @@ class ApiService {
     required String fileName,
     required String patientNumber,
   }) async {
-    final currentDateTime = DateTime.now().toUtc().toString().split('.')[0];
-    const userLogin = 'gajendra82';
+    final data = {
+      'doctor_id': doctorId,
+      'patient_id': patientId,
+      'patient_number': patientNumber,
+      'file_name': fileName,
+    };
 
     try {
-      final response = await _dio.delete(
-        '/api/deletePatientImage',
-        data: {
-          'doctor_id': doctorId,
-          'patient_id': patientId,
-          'file_name': fileName,
-          'patient_number': patientNumber,
-          'user_login': userLogin,
-          'timestamp': currentDateTime,
-        },
+      final response = await _dio.post(
+        '/deletePatientImage',
+        data: data,
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
       );
       return GetUploadedImagesResponse.fromJson(response.data);
     } catch (e) {

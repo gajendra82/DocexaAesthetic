@@ -18,7 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final user = await repository.login(
           event.email, event.password); // user is Loginresponse
-      emit(AuthSuccess(user));
+      emit(LoginSuccess(user));
     } catch (e) {
       emit(AuthFailure(e.toString()));
     }
@@ -27,10 +27,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onCreateAccountRequested(
       CreateAccountRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
+
     try {
-      final user =
-          await repository.createAccount(event.data); // user is Loginresponse
-      emit(AuthSuccess(user));
+      // Add timestamp and user_login to the request data
+      final requestData = {
+        ...event.data,
+      };
+
+      final response = await repository.createAccount(requestData);
+
+      if (response.status) {
+        emit(CreateAccountSuccess(response));
+      } else {
+        emit(AuthFailure(response.message));
+      }
     } catch (e) {
       emit(AuthFailure(e.toString()));
     }

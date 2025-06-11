@@ -8,6 +8,51 @@ import 'image_state.dart';
 class ImageBloc extends Bloc<ImageEvent, ImageState> {
   final PatientRepository patientRepository; // Instance of PatientRepository
 
+  Future<void> _onRemoveImage(
+      RemoveImage event, Emitter<ImageState> emit) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+
+      if (event.isUploaded) {
+        final response = await patientRepository.deletePatientImage(
+          doctorId: event.doctorId!,
+          patientId: event.patientId!,
+          fileName: event.fileName,
+          patientNumber: event.patientNumber!,
+        );
+
+        if (response.status) {
+          final newUploadedFiles = List<UploadedFile>.from(state.uploadedFiles);
+          newUploadedFiles.removeAt(event.index);
+
+          emit(state.copyWith(
+            uploadedFiles: newUploadedFiles,
+            isLoading: false,
+            error: null,
+          ));
+        } else {
+          emit(state.copyWith(
+            isLoading: false,
+            error: response.message,
+          ));
+        }
+      } else {
+        final newImages = List<File>.from(state.images);
+        newImages.removeAt(event.index);
+        emit(state.copyWith(
+          images: newImages,
+          isLoading: false,
+          error: null,
+        ));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+        isLoading: false,
+        error: 'Error deleting image: $e',
+      ));
+    }
+  }
+
   ImageBloc(this.patientRepository) : super(const ImageState()) {
     // on<SelectPatient>((event, emit) {
     //   emit(state.copyWith(selectedPatient: event.patient));
@@ -25,61 +70,14 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
       emit(state.copyWith(images: []));
     });
 
+    on<RemoveImage>(_onRemoveImage); // Add this line
+
 // Inside your ImageBloc class, in the event handler
-    on<RemoveImage>((event, emit) {
-      final newImages = List<File>.from(state.images);
-      newImages.removeAt(event.index);
-      emit(state.copyWith(images: newImages));
-    });
-
-    Future<void> _onRemoveImage(
-        RemoveImage event, Emitter<ImageState> emit) async {
-      try {
-        // Set loading state
-        emit(state.copyWith(isLoading: true));
-
-        if (event.isUploaded) {
-          final response = await patientRepository.deletePatientImage(
-            doctorId: event.doctorId!,
-            patientId: event.patientId!,
-            fileName: event.fileName,
-            patientNumber: event.patientNumber!,
-          );
-
-          if (response.status) {
-            // Remove the file from uploadedFiles list
-            final newUploadedFiles =
-                List<UploadedFile>.from(state.uploadedFiles);
-            newUploadedFiles.removeAt(event.index);
-
-            emit(state.copyWith(
-              uploadedFiles: newUploadedFiles,
-              isLoading: false,
-              error: null,
-            ));
-          } else {
-            emit(state.copyWith(
-              isLoading: false,
-              error: response.message,
-            ));
-          }
-        } else {
-          // Handle local image deletion
-          final newImages = List<File>.from(state.images);
-          newImages.removeAt(event.index);
-          emit(state.copyWith(
-            images: newImages,
-            isLoading: false,
-            error: null,
-          ));
-        }
-      } catch (e) {
-        emit(state.copyWith(
-          isLoading: false,
-          error: 'Error deleting image: $e',
-        ));
-      }
-    }
+    // on<RemoveImage>((event, emit) {
+    //   final newImages = List<File>.from(state.images);
+    //   newImages.removeAt(event.index);
+    //   emit(state.copyWith(images: newImages));
+    // });
 
     // on<UpdateImagesWithUrls>((event, emit) {
     //   emit(state.copyWith(

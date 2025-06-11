@@ -45,7 +45,9 @@ dependencies:
   path: ^1.9.0
   intl: ^0.20.2
   shared_preferences: ^2.5.3
-  flutter_native_splash: ^2.4.4
+  in_app_update: ^4.2.3
+  upgrader: ^11.4.0
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -103,10 +105,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-
-flutter_native_splash:
-  color: "#FFFFFF" # Background color (white)
-  image: assets/images/mediola_launcher.png # Optional: your logo/image for splash
+flutter_launcher_icons:
   android: true
   ios: true
-  web: false
+  image_path: "assets/images/mediola_launcher.png"
+  min_sdk_android: 21

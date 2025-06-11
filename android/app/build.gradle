@@ -37,6 +37,23 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
+
+        signingConfigs {
+        release {
+            storeFile file('C:/Users/gajen/Documents/Asthetic_Ai/Patient_Image_upload_app/docexaaesthetic/Aesthetic_key.jks')
+            storePassword 'welcome'
+            keyAlias 'Aesthetic-key-alias'
+            keyPassword 'welcome'
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
+            // other config options
+        }
+    }
 }
 
 flutter {

@@ -5,6 +5,8 @@ import 'package:docexaaesthetic/models/UploadImageResponse.dart';
 import 'package:docexaaesthetic/models/GetUploadedImagesResponse.dart';
 import 'dart:io';
 import 'package:docexaaesthetic/models/Loginresponse.dart';
+import 'package:docexaaesthetic/models/createaccountresponse.dart';
+
 
 
 
@@ -89,7 +91,7 @@ Future<Loginresponse> login(String email, String password) async {
   }
 
   /// Returns Loginresponse model after registration (adjust if your register model differs)
-Future<Loginresponse> createAccount(Map<String, dynamic> data) async {
+Future<Createaccountresponse> createAccount(Map<String, dynamic> data) async {
     return await _apiService.createAccount(data);
   }
 

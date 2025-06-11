@@ -37,7 +37,7 @@ class _FullImageEditorScreenState extends State<FullImageEditorScreen> {
       TransformationController();
   bool isMarkingEnabled = false;
   final GlobalKey _imageKey = GlobalKey();
-  final String userLogin = 'gajendra82'; // Added user login
+  final String userLogin = ''; // Added user login
   final String timestamp = '2025-05-27 07:25:45'; // Added timestamp
 
   List<Offset?> points = [];
@@ -226,8 +226,6 @@ class _FullImageEditorScreenState extends State<FullImageEditorScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('User: $userLogin',
-                        style: const TextStyle(color: Colors.teal)),
                     Text(widget.uploadedDate ?? 'Not available',
                         style: const TextStyle(color: Colors.teal)),
                   ],
