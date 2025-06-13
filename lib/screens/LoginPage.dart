@@ -37,11 +37,40 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  Future<void> _onLoginSuccess() async {
+  Future<void> _onLoginSuccess(LoginSuccess state) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('logged_in', true);
+    if (state.user.doctor?.esteblishmentUserMapId != null) {
+      await prefs.setInt(
+        'establishment_user_map_id',
+        state.user.doctor!.esteblishmentUserMapId!,
+      );
+    }
+
+    // Store other useful information
+    if (state.user.doctor != null) {
+      await prefs.setString(
+          'doctor_name',
+          '${state.user.doctor!.firstName ?? ''} ${state.user.doctor!.lastName ?? ''}'
+              .trim());
+      await prefs.setString('doctor_mobile', state.user.doctor!.mobileNo ?? '');
+      if (state.user.doctor!.esteblishmentId != null) {
+        await prefs.setInt(
+            'establishment_id', state.user.doctor!.esteblishmentId!);
+      }
+    }
+
+    if (mounted) {
+      Navigator.of(context).pushReplacementNamed(
+        '/image-upload',
+        arguments: {
+          'establishment_user_map_id':
+              state.user.doctor?.esteblishmentUserMapId,
+          'doctor_id': state.user.doctor?.medicalUserId,
+        },
+      );
+    }
     // You can also store user token or id here as needed
-    Navigator.of(context).pushReplacementNamed('/image-upload');
   }
 
   @override
@@ -54,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
               SnackBar(content: Text(state.error)),
             );
           } else if (state is LoginSuccess) {
-            await _onLoginSuccess();
+            await _onLoginSuccess(state);
           }
         },
         builder: (context, state) {

@@ -11,6 +11,7 @@ import 'package:docexaaesthetic/screens/full_image_editor_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/patientget.dart';
 import '../blocs/image_bloc.dart';
@@ -50,7 +51,10 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     super.initState();
     patientRepository = PatientRepository(apiService);
     _scrollController.addListener(_scrollListener);
-    _loadMorePatients();
+
+    // Update your API calls to include userLogin and timestamp
+
+    _loadUserData();
     context.read<ImageBloc>().stream.listen((state) {
       if (state.error != null && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -75,6 +79,48 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadUserData() async {
+    try {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+      if (args != null && args['establishment_user_map_id'] != null) {
+        setState(() {
+          doctor_id = args['establishment_user_map_id'].toString();
+        });
+      } else {
+        // Fallback to SharedPreferences
+        final prefs = await SharedPreferences.getInstance();
+        final establishmentUserMapId =
+            prefs.getInt('establishment_user_map_id');
+
+        if (establishmentUserMapId != null) {
+          setState(() {
+            doctor_id = establishmentUserMapId.toString();
+          });
+        } else {
+          throw Exception('No establishment user map ID found');
+        }
+      }
+
+      // Once we have the doctor_id, load the patients
+      _loadMorePatients();
+    } catch (e) {
+      print('Error loading establishment_user_map_id: $e');
+      // if (mounted) {
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     SnackBar(
+      //       content: Text('Error loading user data: $e'),
+      //       backgroundColor: Colors.red,
+      //     ),
+      //   );
+      // }
+    } finally {
+      // Fetch images for the selected patient if any
+      // _fetchImagesForSelectedPatient();
+    }
   }
 
   void _fetchImagesForSelectedPatient() {
