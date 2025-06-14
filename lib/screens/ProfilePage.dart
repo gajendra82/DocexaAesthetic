@@ -1,23 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  String userName = 'Doctor Name'; // default value
+
+  @override
+  void initState() {
+    super.initState();
+    getDoctorName(); // load doctor name when widget initializes
+  }
+
+  Future<void> getDoctorName() async {
+    final prefs = await SharedPreferences.getInstance();
+    final name = prefs.getString('doctor_name') ?? 'Doctor Name';
+    setState(() {
+      userName = name;
+    });
+  }
 
   Future<void> _logoutcleardata(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('logged_in', false);
-    // You can clear other user data if needed
     Navigator.of(context).pushReplacementNamed('/login');
   }
 
   void _logout(BuildContext context) {
-    // TODO: Add your logout logic here (e.g., clear tokens, call logout API, etc.)
-    // For demonstration:
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Logout'),
+        title: const Text('Logout', style: TextStyle(color: Colors.teal)),
         content: const Text('Are you sure you want to logout?'),
         actions: [
           TextButton(
@@ -25,12 +43,10 @@ class ProfilePage extends StatelessWidget {
             child: const Text('Cancel'),
           ),
           ElevatedButton(
-            onPressed: () {
-              _logoutcleardata(context); // Call the logout function
-              // Clear user session/token here
+            onPressed: () async {
               Navigator.pop(context); // Close dialog
               Navigator.pop(context); // Close profile page
-              // Optionally: Navigate to login page
+              await _logoutcleardata(context); // Clear session
             },
             child: const Text('Logout'),
           ),
@@ -41,12 +57,11 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Replace with actual user info
-    String userName = "gajendra82";
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('Profile', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.teal.shade600,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Center(
         child: Column(
@@ -64,7 +79,7 @@ class ProfilePage extends StatelessWidget {
               label: const Text('Logout'),
               onPressed: () => _logout(context),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
+                backgroundColor: Colors.teal,
                 foregroundColor: Colors.white,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 12),

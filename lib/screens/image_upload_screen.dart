@@ -6,7 +6,6 @@ import 'package:docexaaesthetic/blocs/PatientBloc.dart';
 import 'package:docexaaesthetic/models/GetUploadedImagesResponse.dart';
 import 'package:docexaaesthetic/models/UploadImageResponse.dart';
 import 'package:docexaaesthetic/screens/ProfilePage.dart';
-
 import 'package:docexaaesthetic/screens/full_image_editor_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +28,8 @@ class ImageUploadScreen extends StatefulWidget {
 }
 
 class _ImageUploadScreenState extends State<ImageUploadScreen> {
+  bool _didLoadUserData = false;
+
   final picker = ImagePicker();
   final apiService = ApiService();
   late final PatientRepository patientRepository;
@@ -44,19 +45,16 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
 
   // Scroll controller for lazy loading
   final ScrollController _scrollController = ScrollController();
-  String doctor_id = "70688"; // Replace with actual doctor ID
+  String doctor_id = "";
 
   @override
   void initState() {
     super.initState();
     patientRepository = PatientRepository(apiService);
     _scrollController.addListener(_scrollListener);
-
-    // Update your API calls to include userLogin and timestamp
-
-    _loadUserData();
     context.read<ImageBloc>().stream.listen((state) {
       if (state.error != null && mounted) {
+        // This is fine because it's inside a callback, not initState
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(state.error!),
@@ -72,6 +70,16 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         );
       }
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    if (!_didLoadUserData) {
+      _didLoadUserData = true;
+      _loadUserData();
+    }
   }
 
   @override
@@ -104,22 +112,18 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
           throw Exception('No establishment user map ID found');
         }
       }
-
       // Once we have the doctor_id, load the patients
       _loadMorePatients();
     } catch (e) {
       print('Error loading establishment_user_map_id: $e');
-      // if (mounted) {
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(
-      //       content: Text('Error loading user data: $e'),
-      //       backgroundColor: Colors.red,
-      //     ),
-      //   );
-      // }
-    } finally {
-      // Fetch images for the selected patient if any
-      // _fetchImagesForSelectedPatient();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error loading user data: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
@@ -144,7 +148,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
 
     try {
       final newPatients = await patientRepository.getPatients(
-        userId: int.parse(doctor_id), // Replace with actual user ID
+        userId: int.parse(doctor_id),
         page: _currentPage,
         perPage: _perPage,
       );
@@ -219,17 +223,6 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     }
   }
 
-  // Future<void> _pickImage(BuildContext context, ImageSource source) async {
-  //   final pickedFile = await picker.pickImage(source: source);
-  //   if (pickedFile != null) {
-  //     context.read<ImageBloc>().add(AddImage(File(pickedFile.path)));
-  //   }
-  // }
-
-  // ... (keep other code the same until _openPatientSelector method)
-
-  // ... (keep other code the same until _openPatientSelector method)
-
   void _openPatientSelector() {
     showModalBottomSheet(
       context: context,
@@ -298,7 +291,6 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         builder: (context, state) {
           return BlocBuilder<PatientBloc, PatientState>(
             builder: (context, patientState) {
-              // final patient = PatientState.selectedPatient;
               final patient = patientState is PatientLoadSuccess
                   ? patientState.selectedPatient
                   : null;
@@ -565,6 +557,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                         child: Material(
                           color: Colors.transparent,
                           child: InkWell(
+                            // Only enable upload if patient is selected and not submitting
                             onTap: (patientState is PatientLoadSuccess &&
                                     patientState.selectedPatient != null &&
                                     !_isSubmitting)
@@ -575,23 +568,14 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                                     try {
                                       final selectedPatient =
                                           patientState.selectedPatient!;
-                                      final doctorId =
-                                          doctor_id; // Replace or fetch dynamically
+                                      final doctorId = doctor_id;
                                       final patientId =
                                           selectedPatient.patientId.toString();
                                       final patientNumber =
                                           selectedPatient.mobileNo;
 
-                                      final patient =
-                                          patientState is PatientLoadSuccess
-                                              ? patientState
-                                                  .selectedPatient!.mobileNo
-                                              : null;
-
-                                      // Upload images and get response
-                                      final GetUploadedImagesResponse response =
-                                          await patientRepository
-                                              .uploadPatientImages(
+                                      final response = await patientRepository
+                                          .uploadPatientImages(
                                         imageFiles: state.images,
                                         doctorId: doctorId,
                                         patientId: patientId,
@@ -609,11 +593,9 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                                             ),
                                           );
 
-                                          // Update uploaded files in state - this will automatically refresh the UI
                                           if (response.data?.uploadedFiles
                                                   .isNotEmpty ??
                                               false) {
-                                            // Create a new UpdateUploadedFiles event with the new files
                                             context.read<ImageBloc>().add(
                                                   UpdateUploadedFiles(
                                                     List<UploadedFile>.from(
@@ -621,21 +603,12 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                                                             .uploadedFiles),
                                                   ),
                                                 );
-
-                                            // Print for debugging
-                                            print(
-                                                'New files being added: ${response.data!.uploadedFiles.length}');
-                                          }
-
-                                          // If there are uploaded files, update the UI with their URLs
-                                          else {
-                                            // If no files were uploaded, clear the images
+                                          } else {
                                             context
                                                 .read<ImageBloc>()
                                                 .add(ClearImages());
                                           }
                                         } else {
-                                          // Error case
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
@@ -682,7 +655,22 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                                       });
                                     }
                                   }
-                                : null,
+                                : () {
+                                    // Show warning if patient not selected
+                                    if (state.images.isNotEmpty &&
+                                        (patientState is! PatientLoadSuccess ||
+                                            patientState.selectedPatient ==
+                                                null)) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              'Please select a patient before uploading images.'),
+                                          backgroundColor: Colors.orange,
+                                        ),
+                                      );
+                                    }
+                                  },
                             borderRadius: BorderRadius.circular(12),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -818,7 +806,6 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
             )
           : GridView.builder(
               padding: const EdgeInsets.all(16),
-              // Update itemCount to handle both local and uploaded images separately
               itemCount:
                   state.images.length + (state.uploadedFiles?.length ?? 0),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -828,8 +815,6 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                 childAspectRatio: 1,
               ),
               itemBuilder: (context, index) {
-                // Show local images first
-
                 try {
                   if (index < state.images.length) {
                     // Local images section
@@ -1106,12 +1091,12 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
 
 class _PatientSelectorSheet extends StatelessWidget {
   final ScrollController scrollController;
-  final Function(Patient) onPatientSelected; // Add this callback
+  final Function(Patient) onPatientSelected;
 
   const _PatientSelectorSheet({
     Key? key,
     required this.scrollController,
-    required this.onPatientSelected, // Add this parameter
+    required this.onPatientSelected,
   }) : super(key: key);
 
   @override
@@ -1128,7 +1113,6 @@ class _PatientSelectorSheet extends StatelessWidget {
           ),
           child: Column(
             children: [
-              // Handle bar
               Container(
                 margin: const EdgeInsets.only(top: 8),
                 height: 4,
@@ -1138,7 +1122,6 @@ class _PatientSelectorSheet extends StatelessWidget {
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              // Search header with padding
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextField(
@@ -1237,10 +1220,8 @@ class _PatientSelectorSheet extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        // Here we pass the existing Patient object
         context.read<PatientBloc>().add(SelectPatientEvent(patient));
-        onPatientSelected(patient); // Call the callback
-
+        onPatientSelected(patient);
         Navigator.pop(context);
       },
       child: Container(
