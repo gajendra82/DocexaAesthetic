@@ -43,9 +43,11 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   final List<Patient> _patients = [];
   List<Patient> _filteredPatients = [];
 
-  // Scroll controller for lazy loading
   final ScrollController _scrollController = ScrollController();
   String doctor_id = "";
+
+  // Cache for uploaded images per patient number
+  final Map<String, List<UploadedFile>> _uploadedImagesCache = {};
 
   @override
   void initState() {
@@ -54,7 +56,6 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     _scrollController.addListener(_scrollListener);
     context.read<ImageBloc>().stream.listen((state) {
       if (state.error != null && mounted) {
-        // This is fine because it's inside a callback, not initState
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(state.error!),
@@ -74,7 +75,6 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     if (!_didLoadUserData) {
       _didLoadUserData = true;
@@ -112,7 +112,6 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
           throw Exception('No establishment user map ID found');
         }
       }
-      // Once we have the doctor_id, load the patients
       _loadMorePatients();
     } catch (e) {
       print('Error loading establishment_user_map_id: $e');
@@ -127,14 +126,23 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     }
   }
 
-  void _fetchImagesForSelectedPatient() {
-    final patientState = context.read<PatientBloc>().state;
-    if (patientState is PatientLoadSuccess &&
-        patientState.selectedPatient != null) {
+  // Only show images for the selected patient; use cache if available, else fetch from server
+  void _fetchImagesForSelectedPatient(Patient patient) {
+    final patientNumber = patient.mobileNo!;
+    if (_uploadedImagesCache.containsKey(patientNumber)) {
+      // Use cached images
+      context.read<ImageBloc>().add(ClearImages());
+      context.read<ImageBloc>().add(
+            UpdateUploadedFiles(
+                List<UploadedFile>.from(_uploadedImagesCache[patientNumber]!)),
+          );
+    } else {
+      context.read<ImageBloc>().add(ClearImages());
       context.read<ImageBloc>().add(
             FetchUploadedImages(
-                patientNumber: patientState.selectedPatient!.mobileNo!,
-                doctorid: doctor_id),
+              patientNumber: patientNumber,
+              doctorid: doctor_id,
+            ),
           );
     }
   }
@@ -203,7 +211,6 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
       if (pickedFile != null) {
         final File imageFile = File(pickedFile.path);
 
-        // Add to local images immediately
         setState(() {
           context.read<ImageBloc>().add(
                 AddImage(imageFile),
@@ -231,17 +238,13 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
       builder: (context) => BlocProvider.value(
         value: context.read<PatientBloc>(),
         child: _PatientSelectorSheet(
-            scrollController: _scrollController,
-            onPatientSelected: (Patient patient) {
-              if (patient.mobileNo != null) {
-                context.read<ImageBloc>().add(
-                      FetchUploadedImages(
-                        patientNumber: patient.mobileNo!,
-                        doctorid: doctor_id,
-                      ),
-                    );
-              }
-            }),
+          scrollController: _scrollController,
+          onPatientSelected: (Patient patient) {
+            // When a patient is selected, clear all images and load only that patient's images
+            context.read<ImageBloc>().add(ClearImages());
+            _fetchImagesForSelectedPatient(patient);
+          },
+        ),
       ),
     );
   }
@@ -287,7 +290,19 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
           ),
         ],
       ),
-      body: BlocBuilder<ImageBloc, ImageState>(
+      body: BlocConsumer<ImageBloc, ImageState>(
+        listener: (context, state) {
+          // Update cache on uploadedFiles update for each patient
+          final patientState = context.read<PatientBloc>().state;
+          final patientNumber = patientState is PatientLoadSuccess &&
+                  patientState.selectedPatient != null
+              ? patientState.selectedPatient!.mobileNo
+              : null;
+          if (patientNumber != null && state.uploadedFiles != null) {
+            _uploadedImagesCache[patientNumber] =
+                List<UploadedFile>.from(state.uploadedFiles);
+          }
+        },
         builder: (context, state) {
           return BlocBuilder<PatientBloc, PatientState>(
             builder: (context, patientState) {
@@ -557,7 +572,6 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                         child: Material(
                           color: Colors.transparent,
                           child: InkWell(
-                            // Only enable upload if patient is selected and not submitting
                             onTap: (patientState is PatientLoadSuccess &&
                                     patientState.selectedPatient != null &&
                                     !_isSubmitting)
@@ -584,7 +598,6 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
 
                                       if (context.mounted) {
                                         if (response.status) {
-                                          // Success case
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
@@ -592,7 +605,6 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                                               backgroundColor: Colors.green,
                                             ),
                                           );
-
                                           if (response.data?.uploadedFiles
                                                   .isNotEmpty ??
                                               false) {
@@ -603,6 +615,11 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                                                             .uploadedFiles),
                                                   ),
                                                 );
+                                            // Update the cache for this patient
+                                            _uploadedImagesCache[
+                                                    patientNumber] =
+                                                List<UploadedFile>.from(response
+                                                    .data!.uploadedFiles);
                                           } else {
                                             context
                                                 .read<ImageBloc>()
@@ -656,7 +673,6 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                                     }
                                   }
                                 : () {
-                                    // Show warning if patient not selected
                                     if (state.images.isNotEmpty &&
                                         (patientState is! PatientLoadSuccess ||
                                             patientState.selectedPatient ==
