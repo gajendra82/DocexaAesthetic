@@ -6,6 +6,7 @@ import 'package:docexaaesthetic/models/UploadImageResponse.dart';
 import 'package:docexaaesthetic/models/createaccountresponse.dart';
 import 'package:docexaaesthetic/models/patientget.dart';
 import 'package:path/path.dart';
+import 'dart:convert';
 
 class ApiService {
   final Dio _dio = Dio();
@@ -177,7 +178,7 @@ class ApiService {
     try {
       final response = await _dio.post(
         '/auth/public/login',
-        data: {'email': email, 'password': password},
+        data: jsonEncode({'email': email, 'password': password}),
         options: Options(
           headers: {'Content-Type': 'application/json'},
         ),

@@ -36,7 +36,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   bool _isSubmitting = false;
 
   // Pagination variables
-  final int _perPage = 10;
+  final int _perPage = 500;
   int _currentPage = 1;
   bool _hasMoreData = true;
   bool _isLoading = false;

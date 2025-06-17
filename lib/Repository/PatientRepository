@@ -19,7 +19,7 @@ class PatientRepository {
   Future<patientget> getPatients({
     required int userId,
     required int page,
-    int perPage = 10,
+    required perPage,
   }) async {
     try {
       return await _apiService.getPatients(
