@@ -71,7 +71,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/mediola_launcher.png
+    - assets/images/mediola_launcher_fixed.png
 
   # To add custom native code to your Flutter app, add a plugin section here.
 
@@ -108,5 +108,5 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/images/mediola_launcher.png"
+  image_path: "assets/images/mediola_launcher_fixed.png"
   min_sdk_android: 21

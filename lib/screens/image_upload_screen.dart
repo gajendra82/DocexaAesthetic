@@ -410,13 +410,19 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                                                 color: Colors.teal.shade300,
                                               ),
                                               const SizedBox(width: 4),
-                                              Text(
-                                                patient.lastAppointmentDate !=
-                                                        null
-                                                    ? 'Last Visit: ${patient.lastAppointmentDate}'
-                                                    : 'No Last Visit',
-                                                style: TextStyle(
-                                                  color: Colors.grey.shade600,
+                                              Flexible(
+                                                child: Text(
+                                                  patient.lastAppointmentDate !=
+                                                          null
+                                                      ? 'Last Visit: ${patient.lastAppointmentDate}'
+                                                      : 'No Last Visit',
+                                                  style: TextStyle(
+                                                    color: Colors.grey.shade600,
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  softWrap: false,
+                                                  maxLines: 1,
                                                 ),
                                               ),
                                             ],

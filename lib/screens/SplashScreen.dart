@@ -100,7 +100,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget _splashBody() {
     return Scaffold(
       body: Center(
-        child: Image.asset('assets/images/mediola_launcher.png'),
+        child: Image.asset('assets/images/mediola_launcher_fixed.png'),
       ),
     );
   }
