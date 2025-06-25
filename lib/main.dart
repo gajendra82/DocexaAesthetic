@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<PatientBloc>(
           create: (context) => PatientBloc(
             patientRepository: patientRepository,
-          )..add(const FetchPatientsEvent()),
+          ),
         ),
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(patientRepository),

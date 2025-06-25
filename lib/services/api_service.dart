@@ -11,7 +11,7 @@ import 'dart:convert';
 class ApiService {
   final Dio _dio = Dio();
   final String baseUrl =
-      'https://aestheticai.globalspace.in/aesthetic_backend/public/api/v3';
+      'https://aestheticai.globalspace.in/dev/aesthetic_backend/public/api/v3';
 
   ApiService() {
     _dio.options.baseUrl = baseUrl;
@@ -86,7 +86,7 @@ class ApiService {
 
     for (File image in imageFiles) {
       formData.files.add(MapEntry(
-        'images',
+        'images[]', // ✅ Send as array
         await MultipartFile.fromFile(
           image.path,
           filename: basename(image.path),

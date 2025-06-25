@@ -9,16 +9,22 @@ abstract class PatientEvent extends Equatable {
 }
 
 class FetchPatientsEvent extends PatientEvent {
+  final int userId;
+
   final bool isRefresh;
 
-  const FetchPatientsEvent({this.isRefresh = false});
+  const FetchPatientsEvent({required this.userId, this.isRefresh = false});
 
   @override
-  List<Object?> get props => [isRefresh];
+  List<Object?> get props => [userId, isRefresh];
 }
 
 class FetchMorePatientsEvent extends PatientEvent {
-  const FetchMorePatientsEvent();
+  final int userId;
+
+  const FetchMorePatientsEvent({required this.userId});
+  @override
+  List<Object?> get props => [userId];
 }
 
 class FilterPatientsEvent extends PatientEvent {

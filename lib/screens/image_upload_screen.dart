@@ -112,7 +112,11 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
           throw Exception('No establishment user map ID found');
         }
       }
-      _loadMorePatients();
+      if (doctor_id.isNotEmpty) {
+        context
+            .read<PatientBloc>()
+            .add(FetchPatientsEvent(userId: int.parse(doctor_id)));
+      }
     } catch (e) {
       print('Error loading establishment_user_map_id: $e');
       if (mounted) {
@@ -148,41 +152,10 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   }
 
   Future<void> _loadMorePatients() async {
-    if (_isLoading || !_hasMoreData) return;
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      final newPatients = await patientRepository.getPatients(
-        userId: int.parse(doctor_id),
-        page: _currentPage,
-        perPage: _perPage,
-      );
-
-      setState(() {
-        if (newPatients.data!.patient!.isEmpty) {
-          _hasMoreData = false;
-        } else {
-          _patients.addAll(newPatients.data!.patient!);
-          _filteredPatients = List.from(_patients);
-          _currentPage++;
-        }
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error loading patients: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
+    if (doctor_id.isNotEmpty) {
+      context
+          .read<PatientBloc>()
+          .add(FetchMorePatientsEvent(userId: int.parse(doctor_id)));
     }
   }
 
@@ -244,6 +217,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
             context.read<ImageBloc>().add(ClearImages());
             _fetchImagesForSelectedPatient(patient);
           },
+          doctorId: doctor_id,
         ),
       ),
     );
@@ -1114,11 +1088,13 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
 class _PatientSelectorSheet extends StatelessWidget {
   final ScrollController scrollController;
   final Function(Patient) onPatientSelected;
+  final String doctorId;
 
   const _PatientSelectorSheet({
     Key? key,
     required this.scrollController,
     required this.onPatientSelected,
+    required this.doctorId,
   }) : super(key: key);
 
   @override
@@ -1160,7 +1136,7 @@ class _PatientSelectorSheet extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: _buildPatientList(context, state),
+                child: _buildPatientList(context, state, doctorId),
               ),
             ],
           ),
@@ -1169,7 +1145,72 @@ class _PatientSelectorSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildPatientList(BuildContext context, PatientState state) {
+  // Widget _buildPatientList(
+  //     BuildContext context, PatientState state, String doctor_id) {
+  //   if (state is PatientLoadInProgress) {
+  //     return const Center(child: CircularProgressIndicator());
+  //   }
+
+  //   if (state is PatientLoadFailure) {
+  //     return Center(
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [
+  //           Text(state.error),
+  //           ElevatedButton(
+  //             onPressed: () {
+  //               context.read<PatientBloc>().add(
+  //                   const FetchPatientsEvent(userId: int.parse(doctor_id)));
+  //             },
+  //             child: const Text('Retry'),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   }
+
+  //   if (state is PatientLoadSuccess) {
+  //     final filteredPatients = state.searchQuery.isEmpty
+  //         ? state.patients
+  //         : state.patients
+  //             .where((patient) =>
+  //                 (patient.patientName?.toLowerCase() ?? '')
+  //                     .contains(state.searchQuery.toLowerCase()) ||
+  //                 (patient.mobileNo?.toLowerCase() ?? '')
+  //                     .contains(state.searchQuery.toLowerCase()))
+  //             .toList();
+
+  //     return RefreshIndicator(
+  //       onRefresh: () async {
+  //         context.read<PatientBloc>().add(const FetchPatientsEvent(
+  //             userId: int.parse(doctor_id), isRefresh: true));
+  //       },
+  //       child: ListView.builder(
+  //         controller: scrollController,
+  //         itemCount: filteredPatients.length + (state.hasMoreData ? 1 : 0),
+  //         itemBuilder: (context, index) {
+  //           if (index >= filteredPatients.length) {
+  //             if (!state.hasMoreData) return const SizedBox();
+
+  //             context.read<PatientBloc>().add(
+  //                 const FetchMorePatientsEvent(userId: int.parse(doctor_id)));
+  //             return const Center(child: CircularProgressIndicator());
+  //           }
+
+  //           final patient = filteredPatients[index];
+  //           return _buildPatientItem(context, patient);
+  //         },
+  //       ),
+  //     );
+  //   }
+
+  //   return const SizedBox();
+  // }
+
+  // ... inside _buildPatientList
+
+  Widget _buildPatientList(
+      BuildContext context, PatientState state, String doctor_id) {
     if (state is PatientLoadInProgress) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -1182,7 +1223,9 @@ class _PatientSelectorSheet extends StatelessWidget {
             Text(state.error),
             ElevatedButton(
               onPressed: () {
-                context.read<PatientBloc>().add(const FetchPatientsEvent());
+                context
+                    .read<PatientBloc>()
+                    .add(FetchPatientsEvent(userId: int.parse(doctor_id)));
               },
               child: const Text('Retry'),
             ),
@@ -1204,9 +1247,8 @@ class _PatientSelectorSheet extends StatelessWidget {
 
       return RefreshIndicator(
         onRefresh: () async {
-          context
-              .read<PatientBloc>()
-              .add(const FetchPatientsEvent(isRefresh: true));
+          context.read<PatientBloc>().add(FetchPatientsEvent(
+              userId: int.parse(doctor_id), isRefresh: true));
         },
         child: ListView.builder(
           controller: scrollController,
@@ -1215,7 +1257,9 @@ class _PatientSelectorSheet extends StatelessWidget {
             if (index >= filteredPatients.length) {
               if (!state.hasMoreData) return const SizedBox();
 
-              context.read<PatientBloc>().add(const FetchMorePatientsEvent());
+              context
+                  .read<PatientBloc>()
+                  .add(FetchMorePatientsEvent(userId: int.parse(doctor_id)));
               return const Center(child: CircularProgressIndicator());
             }
 
