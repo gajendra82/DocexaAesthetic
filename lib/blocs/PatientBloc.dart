@@ -6,7 +6,7 @@ import 'PatientState.dart';
 
 class PatientBloc extends Bloc<PatientEvent, PatientState> {
   final PatientRepository _patientRepository;
-  final int _perPage = 10;
+  final int _perPage = 100;
 
   PatientBloc({
     required PatientRepository patientRepository,
@@ -28,7 +28,7 @@ class PatientBloc extends Bloc<PatientEvent, PatientState> {
       print('Fetching patients...'); // Debug log
 
       final patientget response = await _patientRepository.getPatients(
-        userId: 70688, // You might want to make this configurable
+        userId: event.userId, // You might want to make this configurable
         page: 1,
         perPage: _perPage,
       );
@@ -94,7 +94,7 @@ class PatientBloc extends Bloc<PatientEvent, PatientState> {
         print('Fetching more patients...'); // Debug log
 
         final patientget response = await _patientRepository.getPatients(
-          userId: 70688, // You might want to make this configurable
+          userId: event.userId, // You might want to make this configurable
           page: currentState.currentPage + 1,
           perPage: _perPage,
         );
