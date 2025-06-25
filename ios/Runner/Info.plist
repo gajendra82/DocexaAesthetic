@@ -48,6 +48,6 @@
 	<key>UIStatusBarHidden</key>
 	<false/>
     <key>NSCameraUsageDescription</key>
-    <string>This app needs camera access to take photos.</string>
+        <string>This app uses the camera to allow patients to upload skin images for AI-based dermatological analysis and treatment simulation. For example, a user may take a photo of their face to receive acne or wrinkle treatment suggestions.</string>
 </dict>
 </plist>
